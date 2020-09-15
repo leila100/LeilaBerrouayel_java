@@ -33,20 +33,23 @@ public class LeilaBerrouayel_java {
       String command = commandStr[0];
       System.out.println(command);
       String id = "";
+      String val = "";
+      String[] values = new String[4];
       switch(command) {
         case "create":
           // Create a new machine and store its name
           String name = commandStr[1];
           id = commandStr[2];
-          String[] vals = new String[] {"", "", ""};
+          // Store information for each machine [name, total units, number of adds, temperature]
+          String[] vals = new String[] {"", "", "", ""};
           vals[0] = name;
           machines.put(id,  vals);
           break;
         
         case "add":
           id = commandStr[1];
-          String val = commandStr[2];
-          String[] values = machines.get(id);
+          val = commandStr[2];
+          values = machines.get(id);
           if (!values[1].equals("")) {
             int addVal = Integer.parseInt(val);
             int oldVal = Integer.parseInt(values[1]);
@@ -63,6 +66,21 @@ public class LeilaBerrouayel_java {
           id = commandStr[1];
           System.out.println(machines.get(id)[1]);
           break;
+        
+        case "temperature":
+          id = commandStr[1];
+          // get temperature
+          if (commandStr.length == 2) {
+            System.out.println(machines.get(id)[3]);
+          }
+          else {
+            // set temperature
+            val = commandStr[2];
+            values = machines.get(id);
+            values[3] = val;
+            machines.put(id, values);
+          }
+          break;
 
         default:
           System.out.println("Wrong command");
@@ -71,5 +89,7 @@ public class LeilaBerrouayel_java {
 
     System.out.println(machines.get("2")[0]);
     System.out.println(machines.get("2")[1]);
+    System.out.println(machines.get("2")[2]);
+    System.out.println(machines.get("2")[3]);
   }
 }
