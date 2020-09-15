@@ -47,8 +47,6 @@ public class LeilaBerrouayel_java {
           id = commandStr[1];
           String val = commandStr[2];
           String[] values = machines.get(id);
-          System.out.println("val " + val);
-          System.out.println(values);
           if (!values[1].equals("")) {
             int addVal = Integer.parseInt(val);
             int oldVal = Integer.parseInt(values[1]);
@@ -60,16 +58,15 @@ public class LeilaBerrouayel_java {
           }
           machines.put(id, values);
           break;
+        
+        case "total":
+          id = commandStr[1];
+          System.out.println(machines.get(id)[1]);
+          break;
+
         default:
           System.out.println("Wrong command");
       }
-
-      // Create a new machine and store its name
-      // if (command.equals("create")) {
-      //   String name = commandStr[1];
-      //   String id = commandStr[2];
-      //   machines.put(id, new String[] {name});
-      // }
     }
 
     System.out.println(machines.get("2")[0]);
