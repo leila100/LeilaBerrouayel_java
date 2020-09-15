@@ -24,72 +24,68 @@ public class LeilaBerrouayel_java {
   public static void main(String[] args) {
     Console console = System.console();
     String input = "";
-    // Creating a HashMap to store the machines and their information
-    HashMap<String, String[]> machines = new HashMap<String, String[]>();
+    // Creating a HashMap to store the machines by their id
+    HashMap<String, Machine> machines = new HashMap<String, Machine>();
     while (!"q".equalsIgnoreCase(input)) {
       // System.out.print("Enter something (q to quite): ");
       input = console.readLine();
       String[] commandStr = input.split(" "); 
       String command = commandStr[0];
-      System.out.println(command);
       String id = "";
       String val = "";
-      String[] values = new String[4];
-      switch(command) {
+      Machine currentMachine;
+      switch(command.toUpperCase()) {
         case "create":
-          // Create a new machine and store its name
+          // Create a new machine and store its name and id
           String name = commandStr[1];
           id = commandStr[2];
-          // Store information for each machine [name, total units, number of adds, temperature]
-          String[] vals = new String[] {"", "", "", ""};
-          vals[0] = name;
-          machines.put(id,  vals);
+          Machine newMachine = new Machine(name, id);
+          machines.put(id, newMachine);
           break;
         
         case "add":
+          // add the units and keeps track of the adds
           id = commandStr[1];
           val = commandStr[2];
-          values = machines.get(id);
-          if (!values[1].equals("")) {
-            int addVal = Integer.parseInt(val);
-            int oldVal = Integer.parseInt(values[1]);
-            String newVal = Integer.toString(oldVal + addVal);
-            values[1] = newVal;
-          }
-          else {
-            values[1] = val;
-          }
-          machines.put(id, values);
+          currentMachine = machines.get(id);
+          currentMachine.add(Integer.parseInt(val));
           break;
         
         case "total":
+          // display the total units
           id = commandStr[1];
-          System.out.println(machines.get(id)[1]);
+          currentMachine = machines.get(id);
+          currentMachine.total();
           break;
         
         case "temperature":
           id = commandStr[1];
-          // get temperature
+          currentMachine = machines.get(id);
           if (commandStr.length == 2) {
-            System.out.println(machines.get(id)[3]);
+            // print temperature
+            currentMachine.temperature();
           }
           else {
             // set temperature
             val = commandStr[2];
-            values = machines.get(id);
-            values[3] = val;
-            machines.put(id, values);
+            currentMachine.temperature(Integer.parseInt(val));
           }
           break;
-
+        
+        case "average":
+          // print the average produced units
+          id = commandStr[1];
+          currentMachine = machines.get(id);
+          currentMachine.average();
+          break;
         default:
           System.out.println("Wrong command");
       }
     }
 
-    System.out.println(machines.get("2")[0]);
-    System.out.println(machines.get("2")[1]);
-    System.out.println(machines.get("2")[2]);
-    System.out.println(machines.get("2")[3]);
+    // System.out.println(machines.get("2")[0]);
+    // System.out.println(machines.get("2")[1]);
+    // System.out.println(machines.get("2")[2]);
+    // System.out.println(machines.get("2")[3]);
   }
 }
