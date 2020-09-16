@@ -30,7 +30,7 @@ public class LeilaBerrouayel_java {
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
         "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num", "total",
         "total IDX123457", "temperature", "temperature IDX123457", "temperature IDX123456 num", "average",
-        "average IDX123457", "create MACHINE2 IDX123457", "average IDX123457", "command" };
+        "average IDX123457", "create MACHINE3 IDX123457", "average IDX123457", "command" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
@@ -44,7 +44,8 @@ public class LeilaBerrouayel_java {
             System.out.println(
                 "*** since a machine with the id IDX123456 already exists, it will print a message saying so.");
           } else {
-            System.out.println("*** a machine with name MACHINE1 and id IDX123456 should have been created");
+            System.out.println(
+                "*** a machine with name " + commandStr[1] + " and id " + commandStr[2] + " should have been created");
             System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
           }
           break;
@@ -61,7 +62,7 @@ public class LeilaBerrouayel_java {
               System.out.println(machines.get("IDX123456").units == 12);
             }
             if (commandStr[2].equalsIgnoreCase("40")) {
-              System.out.println("*** The machine with id IDX123456 should have 12 units");
+              System.out.println("*** The machine with id IDX123456 should have 52 units");
               System.out.println(machines.get("IDX123456").units == 52);
             }
             if (commandStr[2].equalsIgnoreCase("num")) {
@@ -78,7 +79,7 @@ public class LeilaBerrouayel_java {
             System.out.println("*** since a machine with the id " + commandStr[1]
                 + " does not exist, it will print a message saying so.");
           } else if (commandStr.length == 2) {
-            System.out.println("*** The machine with id IDX123456 should have a temperature of 120.0 printed out");
+            System.out.println("*** The machine with id IDX123456 should have a temperature of 120 printed out");
           } else {
             if (commandStr[2].equalsIgnoreCase("num")) {
               System.out.println("*** since num is not a number, it will print an error message.");
