@@ -30,6 +30,7 @@ The application should allow the following actions:
 - The program is composed of two files: LeilaBerrouayel_java.java and Machine.java.
 - You would compile the program by typing **javac LeilaBerrouayel_java.java***
 - You would run the program by typing **java LeilaBerrouayel_java** or **java LeilaBerrouayel_java test** to run the tests.
+- Stop the program by typing q as a command.
 
 ## How the program works:
 
@@ -38,3 +39,10 @@ The application should allow the following actions:
 - If the command is not valid, it will show an error message
 - If the command is valid, the program will run the appropriate function on the corresponding machine.
 - To run predefined tests, type **java LeilaBerrouayel_java test** that will run the function startTests that will test specific commands (valid and not valid) and display what the program should output.
+
+## Assumptions:
+- Any number in the commands are assumed to be integers
+- If a command is not valid, instead of ignoring the command, an error message will be printed.
+- It is allowed to create two machines with same name as long as they have a different id.
+- The average number of units will be a rounded integer.
+- The program can be exited by typing q as a command.
