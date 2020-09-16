@@ -29,7 +29,7 @@ public class LeilaBerrouayel_java {
     String[] commands = new String[] { "create MACHINE1 IDX123456", "add IDX123456 12", "add IDX123456 40",
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
         "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num", "total",
-        "total IDX123457" };
+        "total IDX123457", "temperature", "temperature IDX123457", "temperature IDX123456 num" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
@@ -70,11 +70,21 @@ public class LeilaBerrouayel_java {
           break;
 
         case "temperature":
-          if (commandStr.length == 3) {
-            System.out.println("*** The machine with id IDX123456 should have a temperature of 120");
-            System.out.println(machines.get("IDX123456").temperature == 120.0);
-          } else {
+          if (commandStr.length == 1) {
+            System.out
+                .println("*** The temperature command require at least one argument. It will print an error message.");
+          } else if (!machines.containsKey(commandStr[1])) {
+            System.out.println("*** since a machine with the id " + commandStr[1]
+                + " does not exist, it will print a message saying so.");
+          } else if (commandStr.length == 2) {
             System.out.println("*** The machine with id IDX123456 should have a temperature of 120.0 printed out");
+          } else {
+            if (commandStr[2].equalsIgnoreCase("num")) {
+              System.out.println("*** since num is not a number, it will print an error message.");
+            } else {
+              System.out.println("*** The machine with id IDX123456 should have a temperature set to 120");
+              System.out.println(machines.get("IDX123456").temperature == 120.0);
+            }
           }
           break;
 
@@ -156,7 +166,6 @@ public class LeilaBerrouayel_java {
           currentMachine.add(Integer.parseInt(val));
         } catch (NumberFormatException nfe) {
           System.out.println("xxx Sorry, please pass an integer to the add command.");
-          return;
         }
         break;
       case "total":
@@ -174,7 +183,16 @@ public class LeilaBerrouayel_java {
         currentMachine.total();
         break;
       case "temperature":
+        if (commandStr.length < 2) {
+          System.out.println(
+              "xxx Please use the temperature command in this format (number is optional) - temperature id number -");
+          return;
+        }
         id = commandStr[1];
+        if (!machines.containsKey(id)) {
+          System.out.println("xxx Sorry, a machine with the id " + id + " does not exists.");
+          return;
+        }
         currentMachine = machines.get(id);
         if (commandStr.length == 2) {
           // print temperature
@@ -182,7 +200,11 @@ public class LeilaBerrouayel_java {
         } else {
           // set temperature
           val = commandStr[2];
-          currentMachine.temperature(Integer.parseInt(val));
+          try {
+            currentMachine.temperature(Integer.parseInt(val));
+          } catch (NumberFormatException nfe) {
+            System.out.println("xxx Sorry, please pass an integer to the temperature command.");
+          }
         }
         break;
       case "average":
