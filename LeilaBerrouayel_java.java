@@ -30,7 +30,7 @@ public class LeilaBerrouayel_java {
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
         "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num", "total",
         "total IDX123457", "temperature", "temperature IDX123457", "temperature IDX123456 num", "average",
-        "average IDX123457", "create MACHINE2 IDX123457", "average IDX123457" };
+        "average IDX123457", "create MACHINE2 IDX123457", "average IDX123457", "command" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
