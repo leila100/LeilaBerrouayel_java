@@ -27,13 +27,20 @@ public class LeilaBerrouayel_java {
     System.out.println("Running tests");
     HashMap<String, Machine> machines = new HashMap<String, Machine>();
     String[] commands = new String[] { "create MACHINE1 IDX123456", "add IDX123456 12", "add IDX123456 40",
-        "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456" };
+        "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
+        "create MACHINE2 IDX123456" };
     for (String str : commands) {
+      System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
       runCommands(commandStr, machines);
       if (commandStr[0].equalsIgnoreCase("create")) {
-        System.out.println("*** a machine with name MACHINE1 and id IDX123456 should have been created");
-        System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
+        if (commandStr[1].equalsIgnoreCase("MACHINE2")) {
+          System.out
+              .println("*** since a machine with the id IDX123456 already exists, it will print a message saying so.");
+        } else {
+          System.out.println("*** a machine with name MACHINE1 and id IDX123456 should have been created");
+          System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
+        }
       } else if (commandStr[0].equalsIgnoreCase("add")) {
         if (commandStr[2].equalsIgnoreCase("12")) {
           System.out.println("*** The machine with id IDX123456 should have 12 units");
@@ -85,6 +92,10 @@ public class LeilaBerrouayel_java {
       case "create":
         String name = commandStr[1];
         id = commandStr[2];
+        if (machines.containsKey(id)) {
+          System.out.println("**** Sorry, a machine with the id " + id + " already exists.");
+          return;
+        }
         Machine newMachine = new Machine(name, id);
         machines.put(id, newMachine);
         break;
