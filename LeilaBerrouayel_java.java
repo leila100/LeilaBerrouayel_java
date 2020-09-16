@@ -29,7 +29,8 @@ public class LeilaBerrouayel_java {
     String[] commands = new String[] { "create MACHINE1 IDX123456", "add IDX123456 12", "add IDX123456 40",
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
         "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num", "total",
-        "total IDX123457", "temperature", "temperature IDX123457", "temperature IDX123456 num" };
+        "total IDX123457", "temperature", "temperature IDX123457", "temperature IDX123456 num", "average",
+        "average IDX123457", "create MACHINE2 IDX123457", "average IDX123457" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
@@ -101,7 +102,18 @@ public class LeilaBerrouayel_java {
           break;
 
         case "average":
-          System.out.println("*** The machine with id IDX123456 should have an average unit number of 26 printed out");
+          if (commandStr.length != 2) {
+            System.out
+                .println("*** since the average command requires the id parameter, it will print a message saying so.");
+          } else if (!machines.containsKey(commandStr[1])) {
+            System.out.println("*** since a machine with the id " + commandStr[1]
+                + " does not exist, it will print a message saying so.");
+          } else if (machines.get(commandStr[1]).adds == 0) {
+            System.out.println("*** Since no units where added for this machine, 0 should be printed.");
+          } else {
+            System.out
+                .println("*** The machine with id IDX123456 should have an average unit number of 26 printed out");
+          }
           break;
 
         default:
@@ -208,8 +220,16 @@ public class LeilaBerrouayel_java {
         }
         break;
       case "average":
+        if (commandStr.length != 2) {
+          System.out.println("xxx Please use the average command in this format - average id -");
+          return;
+        }
         // print the average produced units
         id = commandStr[1];
+        if (!machines.containsKey(id)) {
+          System.out.println("xxx Sorry, a machine with the id " + id + " does not exists.");
+          return;
+        }
         currentMachine = machines.get(id);
         currentMachine.average();
         break;

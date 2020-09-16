@@ -32,6 +32,10 @@ public class Machine {
     }
 
     public void average() {
-        System.out.println(this.units / this.adds);
+        if (this.adds == 0) {
+            System.out.println(0);
+        } else {
+            System.out.println(this.units / this.adds);
+        }
     }
 }
