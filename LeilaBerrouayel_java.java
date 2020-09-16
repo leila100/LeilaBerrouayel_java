@@ -28,40 +28,92 @@ public class LeilaBerrouayel_java {
     HashMap<String, Machine> machines = new HashMap<String, Machine>();
     String[] commands = new String[] { "create MACHINE1 IDX123456", "add IDX123456 12", "add IDX123456 40",
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
-        "create MACHINE2 IDX123456" };
+        "create MACHINE2 IDX123456", "create MACHINE3" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
       runCommands(commandStr, machines);
-      if (commandStr[0].equalsIgnoreCase("create")) {
-        if (commandStr[1].equalsIgnoreCase("MACHINE2")) {
-          System.out
-              .println("*** since a machine with the id IDX123456 already exists, it will print a message saying so.");
-        } else {
-          System.out.println("*** a machine with name MACHINE1 and id IDX123456 should have been created");
-          System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
-        }
-      } else if (commandStr[0].equalsIgnoreCase("add")) {
-        if (commandStr[2].equalsIgnoreCase("12")) {
-          System.out.println("*** The machine with id IDX123456 should have 12 units");
-          System.out.println(machines.get("IDX123456").units == 12);
-        }
-        if (commandStr[2].equalsIgnoreCase("40")) {
-          System.out.println("*** The machine with id IDX123456 should have 12 units");
-          System.out.println(machines.get("IDX123456").units == 52);
-        }
-      } else if (commandStr[0].equalsIgnoreCase("temperature")) {
-        if (commandStr.length == 3) {
-          System.out.println("*** The machine with id IDX123456 should have a temperature of 120");
-          System.out.println(machines.get("IDX123456").temperature == 120.0);
-        } else {
-          System.out.println("*** The machine with id IDX123456 should have a temperature of 120.0 printed out");
-        }
-      } else if (commandStr[0].equalsIgnoreCase("total")) {
-        System.out.println("*** The machine with id IDX123456 should have a total unit number of 52 printed out");
-      } else if (commandStr[0].equalsIgnoreCase("average")) {
-        System.out.println("*** The machine with id IDX123456 should have an average unit number of 26 printed out");
+      switch (commandStr[0].toLowerCase()) {
+        case "create":
+          if (commandStr.length != 3) {
+            System.out
+                .println("*** since the create command requires two parameters, it will print a message saying so.");
+          } else if (commandStr[1].equalsIgnoreCase("MACHINE2")) {
+            System.out.println(
+                "*** since a machine with the id IDX123456 already exists, it will print a message saying so.");
+          } else {
+            System.out.println("*** a machine with name MACHINE1 and id IDX123456 should have been created");
+            System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
+          }
+          break;
+
+        case "add":
+          if (commandStr[2].equalsIgnoreCase("12")) {
+            System.out.println("*** The machine with id IDX123456 should have 12 units");
+            System.out.println(machines.get("IDX123456").units == 12);
+          }
+          if (commandStr[2].equalsIgnoreCase("40")) {
+            System.out.println("*** The machine with id IDX123456 should have 12 units");
+            System.out.println(machines.get("IDX123456").units == 52);
+          }
+          break;
+
+        case "temperature":
+          if (commandStr.length == 3) {
+            System.out.println("*** The machine with id IDX123456 should have a temperature of 120");
+            System.out.println(machines.get("IDX123456").temperature == 120.0);
+          } else {
+            System.out.println("*** The machine with id IDX123456 should have a temperature of 120.0 printed out");
+          }
+          break;
+
+        case "total":
+          System.out.println("*** The machine with id IDX123456 should have a total unit number of 52 printed out");
+          break;
+
+        case "average":
+          System.out.println("*** The machine with id IDX123456 should have an average unit number of 26 printed out");
+          break;
+
+        default:
+          System.out.println("*** the message wrong command should be printed out.");
+          break;
       }
+      // if (commandStr[0].equalsIgnoreCase("create")) {
+      // if (commandStr[1].equalsIgnoreCase("MACHINE2")) {
+      // System.out
+      // .println("*** since a machine with the id IDX123456 already exists, it will
+      // print a message saying so.");
+      // } else {
+      // System.out.println("*** a machine with name MACHINE1 and id IDX123456 should
+      // have been created");
+      // System.out.println(machines.get("IDX123456").id.equals("IDX123456"));
+      // }
+      // } else if (commandStr[0].equalsIgnoreCase("add")) {
+      // if (commandStr[2].equalsIgnoreCase("12")) {
+      // System.out.println("*** The machine with id IDX123456 should have 12 units");
+      // System.out.println(machines.get("IDX123456").units == 12);
+      // }
+      // if (commandStr[2].equalsIgnoreCase("40")) {
+      // System.out.println("*** The machine with id IDX123456 should have 12 units");
+      // System.out.println(machines.get("IDX123456").units == 52);
+      // }
+      // } else if (commandStr[0].equalsIgnoreCase("temperature")) {
+      // if (commandStr.length == 3) {
+      // System.out.println("*** The machine with id IDX123456 should have a
+      // temperature of 120");
+      // System.out.println(machines.get("IDX123456").temperature == 120.0);
+      // } else {
+      // System.out.println("*** The machine with id IDX123456 should have a
+      // temperature of 120.0 printed out");
+      // }
+      // } else if (commandStr[0].equalsIgnoreCase("total")) {
+      // System.out.println("*** The machine with id IDX123456 should have a total
+      // unit number of 52 printed out");
+      // } else if (commandStr[0].equalsIgnoreCase("average")) {
+      // System.out.println("*** The machine with id IDX123456 should have an average
+      // unit number of 26 printed out");
+      // }
     }
     System.out.println("***************************************");
   }
@@ -90,6 +142,10 @@ public class LeilaBerrouayel_java {
     Machine currentMachine;
     switch (command.toLowerCase()) {
       case "create":
+        if (commandStr.length != 3) {
+          System.out.println("**** Please use the create command in this format - create name id -");
+          return;
+        }
         String name = commandStr[1];
         id = commandStr[2];
         if (machines.containsKey(id)) {
