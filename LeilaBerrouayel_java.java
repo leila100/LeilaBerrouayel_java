@@ -28,7 +28,8 @@ public class LeilaBerrouayel_java {
     HashMap<String, Machine> machines = new HashMap<String, Machine>();
     String[] commands = new String[] { "create MACHINE1 IDX123456", "add IDX123456 12", "add IDX123456 40",
         "temperature IDX123456 120", "temperature IDX123456", "total IDX123456", "average IDX123456",
-        "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num" };
+        "create MACHINE2 IDX123456", "create MACHINE3", "add 45", "add IDX123457 56", "add IDX123456 num", "total",
+        "total IDX123457" };
     for (String str : commands) {
       System.out.println("Executing command: " + str);
       String[] commandStr = str.split(" ");
@@ -78,7 +79,15 @@ public class LeilaBerrouayel_java {
           break;
 
         case "total":
-          System.out.println("*** The machine with id IDX123456 should have a total unit number of 52 printed out");
+          if (commandStr.length != 2) {
+            System.out
+                .println("*** since the total command requires the id parameter, it will print a message saying so.");
+          } else if (!machines.containsKey(commandStr[1])) {
+            System.out.println("*** since a machine with the id " + commandStr[1]
+                + " does not exist, it will print a message saying so.");
+          } else {
+            System.out.println("*** The machine with id IDX123456 should have a total unit number of 52 printed out");
+          }
           break;
 
         case "average":
@@ -118,13 +127,13 @@ public class LeilaBerrouayel_java {
     switch (command.toLowerCase()) {
       case "create":
         if (commandStr.length != 3) {
-          System.out.println("**** Please use the create command in this format - create name id -");
+          System.out.println("xxx Please use the create command in this format - create name id -");
           return;
         }
         String name = commandStr[1];
         id = commandStr[2];
         if (machines.containsKey(id)) {
-          System.out.println("**** Sorry, a machine with the id " + id + " already exists.");
+          System.out.println("xxx Sorry, a machine with the id " + id + " already exists.");
           return;
         }
         Machine newMachine = new Machine(name, id);
@@ -132,27 +141,35 @@ public class LeilaBerrouayel_java {
         break;
       case "add":
         if (commandStr.length != 3) {
-          System.out.println("**** Please use the add command in this format - add id integer -");
+          System.out.println("xxx Please use the add command in this format - add id integer -");
           return;
         }
         // add the units and keeps track of the adds
         id = commandStr[1];
         val = commandStr[2];
         if (!machines.containsKey(id)) {
-          System.out.println("**** Sorry, a machine with the id " + id + " does not exists.");
+          System.out.println("xxx Sorry, a machine with the id " + id + " does not exists.");
           return;
         }
         currentMachine = machines.get(id);
         try {
           currentMachine.add(Integer.parseInt(val));
         } catch (NumberFormatException nfe) {
-          System.out.println("**** Sorry, please pass an integer to the add command.");
+          System.out.println("xxx Sorry, please pass an integer to the add command.");
           return;
         }
         break;
       case "total":
+        if (commandStr.length != 2) {
+          System.out.println("xxx Please use the total command in this format - total id -");
+          return;
+        }
         // display the total units
         id = commandStr[1];
+        if (!machines.containsKey(id)) {
+          System.out.println("xxx Sorry, a machine with the id " + id + " does not exists.");
+          return;
+        }
         currentMachine = machines.get(id);
         currentMachine.total();
         break;
